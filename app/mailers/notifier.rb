@@ -1,3 +1,4 @@
+require 'addressable/uri'
 class Notifier < ActionMailer::Base
   if LibraryGroup.site_config.try(:url)
     uri = Addressable::URI.parse(LibraryGroup.site_config.url)

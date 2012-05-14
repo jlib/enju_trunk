@@ -5,15 +5,17 @@ describe LicensesController do
   fixtures :all
   disconnect_sunspot
 
+  def valid_attributes
+    FactoryGirl.attributes_for(:license)
+  end
+
   describe "GET index" do
     before(:each) do
       FactoryGirl.create(:license)
     end
 
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       it "assigns all licenses as @licenses" do
         get :index
@@ -22,9 +24,7 @@ describe LicensesController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       it "assigns all licenses as @licenses" do
         get :index
@@ -33,9 +33,7 @@ describe LicensesController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       it "assigns all licenses as @licenses" do
         get :index
@@ -53,9 +51,7 @@ describe LicensesController do
 
   describe "GET show" do
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       it "assigns the requested license as @license" do
         license = FactoryGirl.create(:license)
@@ -65,9 +61,7 @@ describe LicensesController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       it "assigns the requested license as @license" do
         license = FactoryGirl.create(:license)
@@ -77,9 +71,7 @@ describe LicensesController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       it "assigns the requested license as @license" do
         license = FactoryGirl.create(:license)
@@ -99,9 +91,7 @@ describe LicensesController do
 
   describe "GET new" do
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       it "assigns the requested license as @license" do
         get :new
@@ -111,9 +101,7 @@ describe LicensesController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       it "should not assign the requested license as @license" do
         get :new
@@ -123,9 +111,7 @@ describe LicensesController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       it "should not assign the requested license as @license" do
         get :new
@@ -145,9 +131,7 @@ describe LicensesController do
 
   describe "GET edit" do
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       it "assigns the requested license as @license" do
         license = FactoryGirl.create(:license)
@@ -157,9 +141,7 @@ describe LicensesController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       it "assigns the requested license as @license" do
         license = FactoryGirl.create(:license)
@@ -169,9 +151,7 @@ describe LicensesController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       it "assigns the requested license as @license" do
         license = FactoryGirl.create(:license)
@@ -191,14 +171,12 @@ describe LicensesController do
 
   describe "POST create" do
     before(:each) do
-      @attrs = FactoryGirl.attributes_for(:license)
+      @attrs = valid_attributes
       @invalid_attrs = {:name => ''}
     end
 
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       describe "with valid params" do
         it "assigns a newly created license as @license" do
@@ -226,9 +204,7 @@ describe LicensesController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       describe "with valid params" do
         it "assigns a newly created license as @license" do
@@ -256,9 +232,7 @@ describe LicensesController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       describe "with valid params" do
         it "assigns a newly created license as @license" do
@@ -292,7 +266,7 @@ describe LicensesController do
           assigns(:license).should be_valid
         end
 
-        it "should be forbidden" do
+        it "should be redirected to new_user_session_url" do
           post :create, :license => @attrs
           response.should redirect_to(new_user_session_url)
         end
@@ -315,14 +289,12 @@ describe LicensesController do
   describe "PUT update" do
     before(:each) do
       @license = FactoryGirl.create(:license)
-      @attrs = FactoryGirl.attributes_for(:license)
+      @attrs = valid_attributes
       @invalid_attrs = {:name => ''}
     end
 
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       describe "with valid params" do
         it "updates the requested license" do
@@ -335,7 +307,7 @@ describe LicensesController do
         end
 
         it "moves its position when specified" do
-          put :update, :id => @license.id, :license => @attrs, :position => 2
+          put :update, :id => @license.id, :license => @attrs, :move => 'lower'
           response.should redirect_to(licenses_url)
         end
       end
@@ -349,9 +321,7 @@ describe LicensesController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       describe "with valid params" do
         it "updates the requested license" do
@@ -374,9 +344,7 @@ describe LicensesController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       describe "with valid params" do
         it "updates the requested license" do
@@ -425,9 +393,7 @@ describe LicensesController do
     end
 
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       it "destroys the requested license" do
         delete :destroy, :id => @license.id
@@ -440,9 +406,7 @@ describe LicensesController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       it "destroys the requested license" do
         delete :destroy, :id => @license.id
@@ -455,9 +419,7 @@ describe LicensesController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       it "destroys the requested license" do
         delete :destroy, :id => @license.id

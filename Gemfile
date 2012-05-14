@@ -6,18 +6,25 @@ gem 'rails', '3.2.3'
 #gem 'enju_calil', :git => 'git://github.com/nabeta/enju_calil.git'
 #gem 'enju_scribd', :git => 'git://github.com/nabeta/enju_scribd.git'
 #gem 'enju_nii', :git => 'git://github.com/nabeta/enju_nii.git'
-gem 'enju_oai', :git => 'git://github.com/nabeta/enju_oai.git'
+gem 'enju_oai', '~> 0.0.3'
+gem 'enju_ndl', '~> 0.0.23'
+gem 'enju_subject', '~> 0.0.12'
+gem 'enju_purchase_request', '~> 0.0.7'
+gem 'enju_question', '~> 0.0.12'
+gem 'enju_bookmark', '~> 0.0.8'
+gem 'enju_resource_merge', '~> 0.0.6'
+gem 'enju_circulation', '~> 0.0.33'
+gem 'enju_message', '~> 0.0.19'
+gem 'enju_inventory', '~> 0.0.6'
+gem 'enju_event', '~> 0.0.17'
+gem 'enju_search_log', '~> 0.0.3'
 gem 'enju_book_jacket', :git => 'git://github.com/nabeta/enju_book_jacket.git'
 gem 'enju_manifestation_viewer', :git => 'git://github.com/nabeta/enju_manifestation_viewer.git'
-gem "enju_ndl", "~> 0.0.23"
-#gem 'enju_ndl', :git => 'git://github.com/nabeta/enju_ndl.git'
-#gem 'enju_question', :git => 'git://github.com/nabeta/enju_question.git'
 
 #gem 'enju_standalone_interface', :path => '/Users/tmpz84/src/enju_standalone_interface'
 gem 'enju_standalone_interface', :git => 'git://github.com/nakamura-akifumi/enju_standalone_interface.git'
 gem "jpp_customercode_transfer", "~> 0.0.2"
 
-#
 platforms :ruby do
   gem 'pg'
   #gem 'mysql2', '~> 0.3'
@@ -78,18 +85,18 @@ gem 'rghost_barcode'
 gem 'rqrcode'
 gem 'event-calendar', :require => 'event_calendar'
 gem 'geocoder'
-gem 'acts_as_list', :git => 'git://github.com/emiko/acts_as_list.git'
+gem 'acts_as_list', '~> 0.1.6'
 gem 'library_stdnums'
 gem 'client_side_validations', '~> 3.2.0.beta.3'
 gem 'simple_form', '~> 2.0'
 gem 'validates_timeliness'
 gem 'rack-protection'
 gem 'awesome_nested_set', '~> 2.1'
+gem 'rails_autolink'
 gem 'paranoia'
 gem 'thinreports'
 gem "rmagick", :require => false
 gem "crypt19"
-gem 'rails_autolink'
 #gem 'oink', '>= 0.9.3'
 
 group :development do
@@ -130,12 +137,14 @@ gem 'jquery-rails'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
-# Use unicorn as the web server
+# To use Jbuilder templates for JSON
+# gem 'jbuilder'
+
+# Use unicorn as the app server
 # gem 'unicorn'
 
 # Deploy with Capistrano
 # gem 'capistrano'
 
-# To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
+# To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
-

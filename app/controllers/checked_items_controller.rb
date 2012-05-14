@@ -1,6 +1,5 @@
 class CheckedItemsController < ApplicationController
   include NotificationSound
-  before_filter :check_client_ip_address
   load_and_authorize_resource
   before_filter :get_basket
 

@@ -1,4 +1,4 @@
-<%- cache(:controller => :manifestations, :action => :show, :id => manifestation.id, :page => 'title', :role => current_user_role_name, :locale => @locale, :manifestation_id => nil) do %>
+<% cache([:manifestation => manifestation.id, :fragment => 'title_html', :role => current_user_role_name, :locale => @locale]) do %>
   <h2 class="resource_title">
     [M]
     <%= link_to manifestation.original_title, manifestation, :itemprop => 'name' -%>
@@ -18,7 +18,7 @@
       <meta itemprop="publishDate" content="<%= manifestation.date_of_publication.iso8601 %>" />
       (<%= t('activerecord.attributes.manifestation.pub_date') %>: <%= manifestation.pub_date -%>)
     <%- end -%>
-    <%- unless manifestation.access_address.blank? -%>
+    <%- if manifestation.access_address? -%>
       <br />
       <%= link_to manifestation.access_address, manifestation.access_address -%>
       <%= link_to image_tag('icons/world_go.png', :size => '16x16', :alt => ('Web'), :title => t('tooltip.web')), manifestation.access_address -%>

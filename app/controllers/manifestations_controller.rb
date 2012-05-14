@@ -5,6 +5,9 @@ class ManifestationsController < ApplicationController
   before_filter :authenticate_user!, :only => :edit
   before_filter :get_patron
   helper_method :get_manifestation, :get_subject
+  if defined?(EnjuSubject)
+    before_filter :get_subject, :except => [:create, :update, :destroy]
+  end
   before_filter :get_series_statement, :only => [:index, :new, :edit]
   before_filter :prepare_options, :only => [:new, :edit]
   helper_method :get_libraries
@@ -14,7 +17,7 @@ class ManifestationsController < ApplicationController
   cache_sweeper :manifestation_sweeper, :only => [:create, :update, :destroy]
   include EnjuOai::OaiController if defined?(EnjuOai)
   include EnjuSearchLog if defined?(EnjuSearchLog)
-  include ApplicationHelper
+  #include ApplicationHelper
 
   # GET /manifestations
   # GET /manifestations.json
@@ -62,7 +65,7 @@ class ManifestationsController < ApplicationController
         end
       end
 
-      set_reservable
+      set_reservable if defined?(EnjuCirculation)
 
       manifestations, sort, @count = {}, {}, {}
       query = ""
@@ -106,9 +109,13 @@ class ManifestationsController < ApplicationController
         reservable = nil
       end
 
-      get_manifestation; get_subject
+      get_manifestation
       patron = get_index_patron
       @index_patron = patron
+
+      if defined?(EnjuSubject)
+        subject = @subject if @subject
+      end
 
       unless params[:mode] == 'add'
         manifestation = @manifestation if @manifestation
@@ -134,7 +141,7 @@ class ManifestationsController < ApplicationController
         else
           with(:periodical).equal_to false
         end
-        facet :reservable
+        facet :reservable if defined?(EnjuCirculation)
       end
       search = make_internal_query(search)
       search.data_accessor_for(Manifestation).select = [
@@ -196,13 +203,15 @@ class ManifestationsController < ApplicationController
         session[:manifestation_ids] = manifestation_ids
       end
 
-      if session[:manifestation_ids]
-        if params[:view] == 'tag_cloud'
-          bookmark_ids = Bookmark.where(:manifestation_id => session[:manifestation_ids]).limit(1000).select(:id).collect(&:id)
-          @tags = Tag.bookmarked(bookmark_ids)
-          render :partial => 'manifestations/tag_cloud'
-          #session[:manifestation_ids] = nil
-          return
+      if defined?(EnjuBookmark)
+        if session[:manifestation_ids]
+          if params[:view] == 'tag_cloud'
+            bookmark_ids = Bookmark.where(:manifestation_id => session[:manifestation_ids]).limit(1000).select(:id).collect(&:id)
+            @tags = Tag.bookmarked(bookmark_ids)
+            render :partial => 'manifestations/tag_cloud'
+            #session[:manifestation_ids] = nil
+            return
+          end
         end
       end
       page ||= params[:page] || 1
@@ -211,7 +220,7 @@ class ManifestationsController < ApplicationController
         search.query.start_record(params[:startRecord] || 1, params[:maximumRecords] || 200)
       else
         search.build do
-          facet :reservable
+          facet :reservable if defined?(EnjuCirculation)
           facet :carrier_type
           facet :library
           facet :language
@@ -253,7 +262,9 @@ class ManifestationsController < ApplicationController
           @suggested_tag = query.suggest_tags.first
         end
       end
-      save_search_history(query, @manifestations.offset, @count[:query_result], current_user)
+      if defined?(EnjuSearchLog)
+        save_search_history(query, @manifestations.offset, @count[:query_result], current_user)
+      end
       if params[:format] == 'oai'
         unless @manifestations.empty?
           set_resumption_token(params[:resumptionToken], @from_time || Manifestation.last.updated_at, @until_time || Manifestation.first.updated_at)
@@ -330,8 +341,10 @@ class ManifestationsController < ApplicationController
 
     return if render_mode(params[:mode])
 
-    @reserved_count = Reserve.waiting.where(:manifestation_id => @manifestation.id, :checked_out_at => nil).count
-    @reserve = current_user.reserves.where(:manifestation_id => @manifestation.id).first if user_signed_in?
+    if defined?(EnjuCirculation)
+      @reserved_count = Reserve.waiting.where(:manifestation_id => @manifestation.id, :checked_out_at => nil).count
+      @reserve = current_user.reserves.where(:manifestation_id => @manifestation.id).first if user_signed_in?
+    end
 
     if @manifestation.periodical_master?
       redirect_to series_statement_manifestations_url(@manifestation.series_statement)
@@ -414,11 +427,13 @@ class ManifestationsController < ApplicationController
     end
     @original_manifestation = Manifestation.where(:id => params[:manifestation_id]).first
     @manifestation.series_statement = @series_statement if @series_statement
-    if params[:mode] == 'tag_edit'
-      @bookmark = current_user.bookmarks.where(:manifestation_id => @manifestation.id).first if @manifestation rescue nil
-      render :partial => 'manifestations/tag_edit', :locals => {:manifestation => @manifestation}
+    if defined?(EnjuBookmark)
+      if params[:mode] == 'tag_edit'
+        @bookmark = current_user.bookmarks.where(:manifestation_id => @manifestation.id).first if @manifestation rescue nil
+        render :partial => 'manifestations/tag_edit', :locals => {:manifestation => @manifestation}
+      end
+      store_location unless params[:mode] == 'tag_edit'
     end
-    store_location unless params[:mode] == 'tag_edit'
   end
 
   # POST /manifestations
@@ -645,7 +660,6 @@ class ManifestationsController < ApplicationController
   end
 
   def save_search_history(query, offset = 0, total = 0, user = nil)
-    check_dsbl if LibraryGroup.site_config.use_dsbl
     if SystemConfiguration.get("write_search_log_to_file")
       write_search_log(query, total, user)
     else

@@ -12,12 +12,14 @@ end
 #
 # Table name: event_categories
 #
-#  id           :integer         not null, primary key
-#  name         :string(255)     not null
-#  display_name :text
-#  note         :text
-#  position     :integer
-#  created_at   :datetime
-#  updated_at   :datetime
+#  id                :integer         not null, primary key
+#  name              :string(255)     not null
+#  display_name      :text
+#  note              :text
+#  position          :integer
+#  created_at        :datetime
+#  updated_at        :datetime
+#  checkin_ng        :boolean         default(FALSE)
+#  move_checkin_date :integer
 #
 

@@ -95,5 +95,7 @@ end
 #  series_statement_identifier :string(255)
 #  issn                        :string(255)
 #  periodical                  :boolean
+#  root_manifestation_id       :integer
+#  note                        :text
 #
 

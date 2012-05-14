@@ -77,3 +77,17 @@ message_template_00013:
   body: Item received
   position: 13
   locale: ja
+# == Schema Information
+#
+# Table name: message_templates
+#
+#  id         :integer         not null, primary key
+#  status     :string(255)     not null
+#  title      :text            not null
+#  body       :text            not null
+#  position   :integer
+#  created_at :datetime
+#  updated_at :datetime
+#  locale     :string(255)     default("ja")
+#
+

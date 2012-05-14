@@ -125,5 +125,6 @@ purchase_request_00005:
 #  deleted_at          :datetime
 #  state               :string(255)
 #  pub_date            :string(255)
+#  manifestation_id    :integer
 #
 

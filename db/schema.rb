@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120413225628) do
+ActiveRecord::Schema.define(:version => 20120415060342) do
 
   create_table "answer_has_items", :force => true do |t|
     t.integer  "answer_id"
@@ -366,7 +366,7 @@ ActiveRecord::Schema.define(:version => 20120413225628) do
     t.string   "file_hash"
     t.integer  "user_id"
     t.text     "note"
-    t.datetime "imported_at"
+    t.datetime "executed_at"
     t.string   "state"
     t.string   "event_import_file_name"
     t.string   "event_import_content_type"
@@ -1109,7 +1109,7 @@ ActiveRecord::Schema.define(:version => 20120413225628) do
     t.string   "file_hash"
     t.integer  "user_id"
     t.text     "note"
-    t.datetime "imported_at"
+    t.datetime "executed_at"
     t.string   "state"
     t.string   "patron_import_file_name"
     t.string   "patron_import_content_type"
@@ -1419,7 +1419,7 @@ ActiveRecord::Schema.define(:version => 20120413225628) do
     t.string   "file_hash"
     t.integer  "user_id"
     t.text     "note"
-    t.datetime "imported_at"
+    t.datetime "executed_at"
     t.string   "state"
     t.string   "resource_import_file_name"
     t.string   "resource_import_content_type"

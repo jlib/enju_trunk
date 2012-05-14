@@ -88,5 +88,7 @@ end
 #  message_request_id :integer
 #  state              :string(255)
 #  parent_id          :integer
+#  lft                :integer
+#  rgt                :integer
 #
 

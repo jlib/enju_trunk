@@ -143,5 +143,5 @@ message_template_00015:
   status: reserve_reverted_for_library
   title: "取置き済み予約の状態を受付済みに戻しました"
   body: "以下の取置き済であった予約資料の状態を受付済みに戻しました。\n\n<%= manifestations %>"
-  position: 14
+  position: 15
   locale: ja

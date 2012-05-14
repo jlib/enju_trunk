@@ -8,9 +8,9 @@ class ApplicationController < ActionController::Base
   rescue_from RSolr::Error::Http, :with => :render_500_solr
   rescue_from ActionView::MissingTemplate, :with => :render_404_invalid_format
 
-  #before_filter :get_library_group, :set_locale, :set_available_languages, :prepare_for_mobile, :set_current_user
-  before_filter :get_library_group, :set_locale, :set_available_languages, :set_current_user
-  #helper_method :mobile_device?
+  before_filter :get_library_group, :set_locale, :set_available_languages, :set_mobile_request, :set_current_user
+  has_mobile_fu
+  before_filter :set_request_format
 
   private
   def render_403
@@ -85,7 +85,7 @@ class ApplicationController < ActionController::Base
       end
     end
     if user_signed_in?
-      locale = params[:locale] || session[:locale] || current_user.locale.to_sym
+      locale = params[:locale] || session[:locale] || current_user.locale.try(:to_sym)
     else
       locale = params[:locale] || session[:locale]
     end
@@ -389,8 +389,24 @@ class ApplicationController < ActionController::Base
     @current_ability ||= Ability.new(current_user, request.remote_ip)
   end
 
-  def prepare_for_mobile
-    #request.format = :mobile if request.smart_phone?
+  def set_mobile_request
+    if params[:mobile_view]
+      if params[:mobile_view] == 'false'
+        session[:mobile_view] = false
+      else
+        session[:mobile_view] = true
+      end
+    else
+      if is_mobile_device?
+        session[:mobile_view] = true
+      end
+    end
+  end
+
+  def set_request_format
+    if session[:mobile_view]
+      request.format = :mobile if is_mobile_device?
+    end
   end
 
   def move_position(resource, direction)

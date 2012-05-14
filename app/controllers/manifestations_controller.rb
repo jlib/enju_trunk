@@ -151,7 +151,6 @@ class ManifestationsController < ApplicationController
         :pub_date,
         :periodical_master,
         :language_id,
-        :carrier_type_id,
         :created_at
       ] if params[:format] == 'html' or params[:format].nil?
       # catch query error 

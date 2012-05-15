@@ -17,8 +17,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "answer_id"
     t.integer  "item_id"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "answer_has_items", ["answer_id"], :name => "index_answer_has_items_on_answer_id"
@@ -28,8 +28,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "user_id",                                :null => false
     t.integer  "question_id",                            :null => false
     t.text     "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.datetime "deleted_at"
     t.boolean  "shared",               :default => true, :null => false
     t.string   "state"
@@ -55,8 +55,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "printed_number"
     t.integer  "sheet_type"
     t.integer  "last_number"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "barcodes", :force => true do |t|
@@ -65,8 +65,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.string   "barcodable_type"
     t.string   "code_word"
     t.binary   "data"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
   end
 
   add_index "barcodes", ["barcodable_id", "barcodable_type"], :name => "index_barcodes_on_barcodable_id_and_barcodable_type"
@@ -77,8 +77,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "note"
     t.string   "type"
     t.integer  "lock_version", :default => 0, :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
     t.datetime "deleted_at"
   end
 
@@ -89,8 +89,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "bookmark_stat_id", :null => false
     t.integer  "manifestation_id", :null => false
     t.integer  "bookmarks_count"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   add_index "bookmark_stat_has_manifestations", ["bookmark_stat_id"], :name => "index_bookmark_stat_has_manifestations_on_bookmark_stat_id"
@@ -101,8 +101,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.datetime "end_date"
     t.text     "note"
     t.string   "state"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.datetime "started_at"
     t.datetime "completed_at"
   end
@@ -115,8 +115,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "title"
     t.string   "url"
     t.text     "note"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.boolean  "shared"
   end
 
@@ -134,14 +134,14 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.string   "url"
     t.integer  "position"
     t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "budget_types", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "budgets", :force => true do |t|
@@ -159,8 +159,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "checkout_type_id", :null => false
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   add_index "carrier_type_has_checkout_types", ["carrier_type_id"], :name => "index_carrier_type_has_checkout_types_on_m_form_id"
@@ -171,16 +171,16 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "display_name"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "checked_items", :force => true do |t|
     t.integer  "item_id",    :null => false
     t.integer  "basket_id",  :null => false
     t.datetime "due_date",   :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.datetime "deleted_at"
   end
 
@@ -191,8 +191,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "item_id",      :null => false
     t.integer  "librarian_id"
     t.integer  "basket_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   add_index "checkins", ["basket_id"], :name => "index_checkins_on_basket_id"
@@ -203,8 +203,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "manifestation_checkout_stat_id", :null => false
     t.integer  "manifestation_id",               :null => false
     t.integer  "checkouts_count"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
   add_index "checkout_stat_has_manifestations", ["manifestation_checkout_stat_id"], :name => "index_checkout_stat_has_manifestations_on_checkout_stat_id"
@@ -214,8 +214,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "user_checkout_stat_id",                :null => false
     t.integer  "user_id",                              :null => false
     t.integer  "checkouts_count",       :default => 0, :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
   end
 
   add_index "checkout_stat_has_users", ["user_checkout_stat_id"], :name => "index_checkout_stat_has_users_on_user_checkout_stat_id"
@@ -226,8 +226,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "display_name"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   add_index "checkout_types", ["name"], :name => "index_checkout_types_on_name"
@@ -241,8 +241,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.datetime "due_date"
     t.integer  "checkout_renewal_count", :default => 0, :null => false
     t.integer  "lock_version",           :default => 0, :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
   end
 
   add_index "checkouts", ["basket_id"], :name => "index_checkouts_on_basket_id"
@@ -257,8 +257,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "display_name"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "classification_types", :force => true do |t|
@@ -266,8 +266,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "display_name"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "classifications", :force => true do |t|
@@ -275,8 +275,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.string   "category",               :null => false
     t.text     "note"
     t.integer  "classification_type_id", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
     t.integer  "lft"
     t.integer  "rgt"
   end
@@ -290,8 +290,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "display_name"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "countries", :force => true do |t|
@@ -314,8 +314,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "work_id",    :null => false
     t.integer  "position"
     t.string   "type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "creates", ["patron_id"], :name => "index_creates_on_patron_id"
@@ -331,8 +331,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.datetime "locked_at"
     t.datetime "failed_at"
     t.string   "locked_by"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
     t.string   "queue"
   end
 
@@ -341,8 +341,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
   create_table "donates", :force => true do |t|
     t.integer  "patron_id",  :null => false
     t.integer  "item_id",    :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "donates", ["item_id"], :name => "index_donates_on_item_id"
@@ -353,8 +353,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "display_name"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.boolean  "checkin_ng",        :default => false
     t.integer  "move_checkin_date"
   end
@@ -372,8 +372,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.string   "event_import_content_type"
     t.integer  "event_import_file_size"
     t.datetime "event_import_updated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
     t.string   "edit_mode"
     t.string   "event_import_fingerprint"
   end
@@ -387,8 +387,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "event_import_file_id"
     t.integer  "event_id"
     t.text     "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
     t.string   "error_msg"
   end
 
@@ -401,8 +401,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.datetime "end_at"
     t.boolean  "all_day",           :default => false, :null => false
     t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.text     "display_name"
   end
 
@@ -415,8 +415,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.decimal  "rate",       :null => false
     t.datetime "start_date"
     t.datetime "end_date"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "exemplifies", :force => true do |t|
@@ -424,8 +424,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "item_id",          :null => false
     t.string   "type"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   add_index "exemplifies", ["item_id"], :name => "index_exemplifies_on_item_id", :unique => true
@@ -446,15 +446,15 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
 
   create_table "expression_merge_lists", :force => true do |t|
     t.string   "title"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "expression_merges", :force => true do |t|
     t.integer  "expression_id",            :null => false
     t.integer  "expression_merge_list_id", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
   end
 
   add_index "expression_merges", ["expression_id"], :name => "index_expression_merges_on_expression_id"
@@ -465,20 +465,20 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "display_name"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "families", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "family_users", :force => true do |t|
     t.integer  "family_id"
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "family_users", ["family_id"], :name => "index_family_users_on_family_id"
@@ -489,8 +489,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "display_name"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "frequencies", :force => true do |t|
@@ -498,8 +498,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "display_name"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "import_requests", :force => true do |t|
@@ -507,8 +507,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.string   "state"
     t.integer  "manifestation_id"
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   add_index "import_requests", ["isbn"], :name => "index_import_requests_on_isbn"
@@ -522,8 +522,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.string   "importable_type"
     t.string   "state"
     t.integer  "line_number"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
   end
 
   add_index "imported_objects", ["importable_id", "importable_type"], :name => "index_imported_objects_on_importable_id_and_type"
@@ -539,8 +539,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.datetime "return_received_at"
     t.datetime "deleted_at"
     t.string   "state"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.integer  "reason"
     t.integer  "from_library_id",    :null => false
   end
@@ -552,8 +552,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "item_id"
     t.integer  "inventory_file_id"
     t.text     "note"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
   end
 
   add_index "inventories", ["inventory_file_id"], :name => "index_inventories_on_inventory_file_id"
@@ -566,8 +566,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.string   "file_hash"
     t.integer  "user_id"
     t.text     "note"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
     t.string   "inventory_file_name"
     t.string   "inventory_content_type"
     t.integer  "inventory_file_size"
@@ -581,8 +581,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
   create_table "item_has_use_restrictions", :force => true do |t|
     t.integer  "item_id",            :null => false
     t.integer  "use_restriction_id", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
   end
 
   add_index "item_has_use_restrictions", ["item_id"], :name => "index_item_has_use_restrictions_on_item_id"
@@ -593,8 +593,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.string   "item_identifier"
     t.integer  "circulation_status_id",                    :null => false
     t.integer  "checkout_type_id",      :default => 1,     :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
     t.datetime "deleted_at"
     t.integer  "shelf_id",              :default => 1,     :null => false
     t.boolean  "include_supplements",   :default => false, :null => false
@@ -664,8 +664,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.decimal  "fine",           :default => 0.0, :null => false
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
   end
 
   add_index "lending_policies", ["item_id"], :name => "index_lending_policies_on_item_id"
@@ -687,8 +687,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.string   "shelf_name",   :null => false
     t.string   "stack_id"
     t.string   "shelf_grp_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "libcheck_status_changed_items", :force => true do |t|
@@ -696,8 +696,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "item_id",                                 :null => false
     t.integer  "circulation_status_id",                   :null => false
     t.boolean  "completed",             :default => true
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
   end
 
   create_table "libcheck_tmp_items", :force => true do |t|
@@ -735,8 +735,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "users_count",                 :default => 0,   :null => false
     t.integer  "position"
     t.integer  "country_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
     t.datetime "deleted_at"
     t.text     "opening_hour"
     t.float    "latitude"
@@ -750,16 +750,16 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
   add_index "libraries", ["patron_id"], :name => "index_libraries_on_patron_id", :unique => true
 
   create_table "library_check_shelves", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "library_checks", :force => true do |t|
     t.string   "opeym",          :null => false
     t.string   "shelf_def_file"
     t.datetime "operated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
     t.datetime "deleted_at"
     t.string   "state"
     t.string   "error_msg"
@@ -777,8 +777,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "note"
     t.boolean  "post_to_union_catalog",       :default => false,                    :null => false
     t.integer  "country_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                                        :null => false
+    t.datetime "updated_at",                                                        :null => false
     t.text     "admin_networks"
     t.boolean  "allow_bookmark_external_url", :default => false,                    :null => false
     t.integer  "position"
@@ -794,8 +794,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "visiters"
     t.integer  "copies"
     t.integer  "consultations"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "licenses", :force => true do |t|
@@ -803,8 +803,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.string   "display_name"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "logged_exceptions", :force => true do |t|
@@ -823,8 +823,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "item_id",                   :null => false
     t.integer  "status",     :default => 0
     t.text     "note"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   create_table "manifestation_checkout_stats", :force => true do |t|
@@ -832,8 +832,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.datetime "end_date"
     t.text     "note"
     t.string   "state"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.datetime "started_at"
     t.datetime "completed_at"
   end
@@ -845,16 +845,16 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "display_name"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "manifestation_relationships", :force => true do |t|
     t.integer  "parent_id"
     t.integer  "child_id"
     t.integer  "manifestation_relationship_type_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.integer  "position"
   end
 
@@ -866,8 +866,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.datetime "end_date"
     t.text     "note"
     t.string   "state"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.datetime "started_at"
     t.datetime "completed_at"
   end
@@ -882,8 +882,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.string   "identifier"
     t.datetime "date_of_publication"
     t.datetime "date_copyrighted"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
     t.datetime "deleted_at"
     t.string   "access_address"
     t.integer  "language_id",                     :default => 1,     :null => false
@@ -975,8 +975,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "display_name"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "message_requests", :force => true do |t|
@@ -987,8 +987,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.datetime "deleted_at"
     t.text     "body"
     t.string   "state"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   add_index "message_requests", ["state"], :name => "index_message_requests_on_state"
@@ -998,8 +998,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "title",                        :null => false
     t.text     "body",                         :null => false
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
     t.string   "locale",     :default => "ja"
   end
 
@@ -1011,8 +1011,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "sender_id"
     t.string   "subject",            :null => false
     t.text     "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.integer  "message_request_id"
     t.string   "state"
     t.integer  "parent_id"
@@ -1030,8 +1030,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "display_name"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   add_index "nii_types", ["name"], :name => "index_nii_types_on_name", :unique => true
@@ -1059,8 +1059,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.datetime "ordered_at"
     t.datetime "deleted_at"
     t.string   "state"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   add_index "order_lists", ["bookstore_id"], :name => "index_order_lists_on_bookstore_id"
@@ -1071,8 +1071,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "purchase_request_id", :null => false
     t.integer  "position"
     t.string   "state"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   add_index "orders", ["order_list_id"], :name => "index_orders_on_order_list_id"
@@ -1083,8 +1083,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "item_id",    :null => false
     t.integer  "position"
     t.string   "type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "owns", ["item_id"], :name => "index_owns_on_item_id"
@@ -1095,8 +1095,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "patron_id",  :null => false
     t.integer  "event_id",   :null => false
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "participates", ["event_id"], :name => "index_participates_on_event_id"
@@ -1115,8 +1115,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.string   "patron_import_content_type"
     t.integer  "patron_import_file_size"
     t.datetime "patron_import_updated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
     t.string   "edit_mode"
     t.string   "patron_import_fingerprint"
   end
@@ -1131,22 +1131,22 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "patron_id"
     t.integer  "user_id"
     t.text     "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
     t.string   "error_msg"
   end
 
   create_table "patron_merge_lists", :force => true do |t|
     t.string   "title"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "patron_merges", :force => true do |t|
     t.integer  "patron_id",            :null => false
     t.integer  "patron_merge_list_id", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
   end
 
   add_index "patron_merges", ["patron_id"], :name => "index_patron_merges_on_patron_id"
@@ -1157,16 +1157,16 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "display_name"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "patron_relationships", :force => true do |t|
     t.integer  "parent_id"
     t.integer  "child_id"
     t.integer  "patron_relationship_type_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
     t.integer  "position"
   end
 
@@ -1178,8 +1178,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "display_name"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "patrons", :force => true do |t|
@@ -1195,8 +1195,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.string   "full_name"
     t.text     "full_name_transcription"
     t.text     "full_name_alternative"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
     t.datetime "deleted_at"
     t.string   "zip_code_1"
     t.string   "zip_code_2"
@@ -1262,8 +1262,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.string   "thumbnail"
     t.string   "file_hash"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
     t.string   "picture_file_name"
     t.string   "picture_content_type"
     t.integer  "picture_file_size"
@@ -1278,8 +1278,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "manifestation_id", :null => false
     t.integer  "position"
     t.string   "type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   add_index "produces", ["manifestation_id"], :name => "index_produces_on_manifestation_id"
@@ -1298,8 +1298,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "note"
     t.datetime "accepted_at"
     t.datetime "denied_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
     t.datetime "deleted_at"
     t.string   "state"
     t.string   "pub_date"
@@ -1314,8 +1314,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "body"
     t.boolean  "shared",        :default => true,  :null => false
     t.integer  "answers_count", :default => 0,     :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.datetime "deleted_at"
     t.string   "state"
     t.boolean  "solved",        :default => false, :null => false
@@ -1329,8 +1329,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "expression_id", :null => false
     t.integer  "position"
     t.string   "type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   add_index "realizes", ["expression_id"], :name => "index_realizes_on_expression_id"
@@ -1340,8 +1340,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
   create_table "reminder_lists", :force => true do |t|
     t.integer  "checkout_id",                     :null => false
     t.integer  "status",           :default => 0, :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.datetime "type1_printed_at"
     t.datetime "type2_printed_at"
   end
@@ -1351,8 +1351,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "display_name"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "request_types", :force => true do |t|
@@ -1360,16 +1360,16 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "display_name"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "reserve_stat_has_manifestations", :force => true do |t|
     t.integer  "manifestation_reserve_stat_id", :null => false
     t.integer  "manifestation_id",              :null => false
     t.integer  "reserves_count"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
   add_index "reserve_stat_has_manifestations", ["manifestation_id"], :name => "index_reserve_stat_has_manifestations_on_manifestation_id"
@@ -1379,8 +1379,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "user_reserve_stat_id", :null => false
     t.integer  "user_id",              :null => false
     t.integer  "reserves_count"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
   end
 
   add_index "reserve_stat_has_users", ["user_id"], :name => "index_reserve_stat_has_users_on_user_id"
@@ -1392,8 +1392,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "item_id"
     t.integer  "request_status_type_id",                          :null => false
     t.datetime "checked_out_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                      :null => false
+    t.datetime "updated_at",                                      :null => false
     t.datetime "canceled_at"
     t.datetime "expired_at"
     t.datetime "deleted_at"
@@ -1425,8 +1425,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.string   "resource_import_content_type"
     t.integer  "resource_import_file_size"
     t.datetime "resource_import_updated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
     t.string   "edit_mode"
     t.string   "resource_import_fingerprint"
   end
@@ -1441,8 +1441,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "manifestation_id"
     t.integer  "item_id"
     t.text     "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
     t.string   "error_msg"
   end
 
@@ -1464,8 +1464,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.string   "resource_import_text_content_type"
     t.integer  "resource_import_text_file_size"
     t.datetime "resource_import_text_updated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.string   "adapter_name"
   end
 
@@ -1479,8 +1479,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "manifestation_id"
     t.integer  "item_id"
     t.text     "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
     t.text     "error_msg"
   end
 
@@ -1504,8 +1504,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "additional_param"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "search_histories", :force => true do |t|
@@ -1528,8 +1528,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "diagnostics"
     t.text     "extra_response_data"
     t.text     "echoed_search_retrieve_request"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                                   :null => false
+    t.datetime "updated_at",                                                   :null => false
   end
 
   add_index "search_histories", ["user_id"], :name => "index_search_histories_on_user_id"
@@ -1549,8 +1549,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "series_statement_id"
     t.integer  "manifestation_id"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   add_index "series_has_manifestations", ["manifestation_id"], :name => "index_series_has_manifestations_on_manifestation_id"
@@ -1558,15 +1558,15 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
 
   create_table "series_statement_merge_lists", :force => true do |t|
     t.string   "title"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "series_statement_merges", :force => true do |t|
     t.integer  "series_statement_id",            :null => false
     t.integer  "series_statement_merge_list_id", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
   add_index "series_statement_merges", ["series_statement_id"], :name => "index_series_statement_merges_on_series_statement_id"
@@ -1578,8 +1578,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "title_subseries"
     t.text     "numbering_subseries"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
     t.text     "title_transcription"
     t.text     "title_alternative"
     t.string   "series_statement_identifier"
@@ -1595,8 +1595,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
     t.text     "data"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
@@ -1609,8 +1609,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "library_id",   :default => 1, :null => false
     t.integer  "items_count",  :default => 0, :null => false
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
     t.datetime "deleted_at"
     t.integer  "open_access",  :default => 0, :null => false
   end
@@ -1657,8 +1657,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "subject_id"
     t.string   "subject_type"
     t.integer  "classification_id", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
   end
 
   add_index "subject_has_classifications", ["classification_id"], :name => "index_subject_has_classifications_on_classification_id"
@@ -1668,8 +1668,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "subject_id",              :null => false
     t.string   "subject_type"
     t.integer  "subject_heading_type_id", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
   end
 
   add_index "subject_heading_type_has_subjects", ["subject_id"], :name => "index_subject_heading_type_has_subjects_on_subject_id"
@@ -1679,8 +1679,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "display_name"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "subject_types", :force => true do |t|
@@ -1688,8 +1688,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "display_name"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "subjects", :force => true do |t|
@@ -1721,8 +1721,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "work_id",         :null => false
     t.datetime "start_at",        :null => false
     t.datetime "end_at",          :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   add_index "subscribes", ["subscription_id"], :name => "index_subscribes_on_subscription_id"
@@ -1735,8 +1735,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "order_list_id"
     t.datetime "deleted_at"
     t.integer  "subscribes_count", :default => 0, :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
   end
 
   add_index "subscriptions", ["order_list_id"], :name => "index_subscriptions_on_order_list_id"
@@ -1745,8 +1745,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
   create_table "system_configurations", :force => true do |t|
     t.string   "keyname",     :null => false
     t.string   "v"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.string   "typename"
     t.string   "description"
   end
@@ -1779,8 +1779,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
   create_table "tags", :force => true do |t|
     t.string   "name"
     t.string   "name_transcription"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
   end
 
   create_table "terms", :force => true do |t|
@@ -1794,8 +1794,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "display_name"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "user_checkout_stats", :force => true do |t|
@@ -1803,8 +1803,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.datetime "end_date"
     t.text     "note"
     t.string   "state"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.datetime "started_at"
     t.datetime "completed_at"
   end
@@ -1823,8 +1823,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.datetime "fixed_due_date"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
     t.integer  "current_checkout_count"
   end
 
@@ -1837,8 +1837,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.text     "display_name"
     t.text     "note"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                      :null => false
+    t.datetime "updated_at",                                      :null => false
     t.datetime "deleted_at"
     t.integer  "valid_period_for_new_user",        :default => 0, :null => false
     t.datetime "expired_at"
@@ -1850,8 +1850,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
   create_table "user_has_roles", :force => true do |t|
     t.integer  "user_id"
     t.integer  "role_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "user_has_roles", ["role_id"], :name => "index_user_has_roles_on_role_id"
@@ -1862,8 +1862,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.datetime "end_date"
     t.text     "note"
     t.string   "state"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.datetime "started_at"
     t.datetime "completed_at"
   end
@@ -1890,8 +1890,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.datetime "locked_at"
     t.string   "authentication_token"
     t.string   "password_salt"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
     t.datetime "deleted_at"
     t.string   "username"
     t.integer  "library_id",               :default => 1,     :null => false
@@ -1952,8 +1952,8 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
     t.integer  "subject_id"
     t.string   "subject_type"
     t.integer  "work_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.integer  "position"
   end
 
@@ -1962,38 +1962,18 @@ ActiveRecord::Schema.define(:version => 20120415060342) do
 
   create_table "work_merge_lists", :force => true do |t|
     t.string   "title"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "work_merges", :force => true do |t|
     t.integer  "work_id",            :null => false
     t.integer  "work_merge_list_id", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
   end
 
   add_index "work_merges", ["work_id"], :name => "index_work_merges_on_work_id"
   add_index "work_merges", ["work_merge_list_id"], :name => "index_work_merges_on_work_merge_list_id"
-
-  create_table "zip_code_lists", :force => true do |t|
-    t.integer  "union_code"
-    t.string   "zipcode5"
-    t.string   "zipcode7"
-    t.string   "prefectrure_name_kana"
-    t.string   "city_name_kana"
-    t.string   "region_name_kana"
-    t.string   "prefecture_name"
-    t.string   "city_name"
-    t.string   "region_name"
-    t.integer  "flag10"
-    t.integer  "flag11"
-    t.integer  "flag12"
-    t.integer  "flag13"
-    t.integer  "flag14"
-    t.integer  "update_flag"
-    t.datetime "created_at",            :null => false
-    t.datetime "updated_at",            :null => false
-  end
 
 end

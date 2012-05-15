@@ -4,7 +4,7 @@ class ItemSweeper < ActionController::Caching::Sweeper
 
   def after_save(record)
     expire_editable_fragment(record)
-    expire_editable_fragment(record.manifestation, ['detail', 'show_list', 'holding'])
+    expire_editable_fragment(record.manifestation)
     record.patrons.each do |patron|
       expire_editable_fragment(patron)
     end
@@ -16,5 +16,4 @@ class ItemSweeper < ActionController::Caching::Sweeper
   def after_destroy(record)
     after_save(record)
   end
-
 end

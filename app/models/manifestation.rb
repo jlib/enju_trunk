@@ -982,15 +982,11 @@ end
 #  issn                            :string(255)
 #  price                           :integer
 #  fulltext                        :text
-#  volume_number_string              :string(255)
-#  issue_number_string               :string(255)
-#  serial_number_string              :string(255)
+#  volume_number_string            :string(255)
+#  issue_number_string             :string(255)
+#  serial_number_string            :string(255)
 #  edition                         :integer
 #  note                            :text
-#  produces_count                  :integer         default(0), not null
-#  exemplifies_count               :integer         default(0), not null
-#  embodies_count                  :integer         default(0), not null
-#  work_has_subjects_count         :integer         default(0), not null
 #  repository_content              :boolean         default(FALSE), not null
 #  lock_version                    :integer         default(0), not null
 #  required_role_id                :integer         default(1), not null
@@ -1013,8 +1009,26 @@ end
 #  date_submitted                  :datetime
 #  date_accepted                   :datetime
 #  date_caputured                  :datetime
+#  ndl_bib_id                      :string(255)
 #  file_hash                       :string(255)
 #  pub_date                        :string(255)
 #  periodical_master               :boolean         default(FALSE), not null
+#  periodical                      :boolean         default(FALSE), not null
+#  volume_number                   :integer
+#  issue_number                    :integer
+#  serial_number                   :integer
+#  ndc                             :string(255)
+#  except_recent                   :boolean         default(FALSE)
+#  exinfo_1                        :string(255)
+#  exinfo_2                        :string(255)
+#  exinfo_3                        :string(255)
+#  exinfo_4                        :string(255)
+#  exinfo_5                        :string(255)
+#  edition_display_value           :string(255)
+#  other_number_list               :string(255)
+#  marc_number                     :string(255)
+#  supplement                      :text
+#  content_type_id                 :integer         default(1)
+#  attachment_fingerprint          :string(255)
 #
 

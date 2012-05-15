@@ -1,7 +1,7 @@
 class EventImportFile < ActiveRecord::Base
   include ImportFile
   default_scope :order => 'id DESC'
-  scope :not_imported, where(:state => 'pending', :imported_at => nil)
+  scope :not_imported, where(:state => 'pending', :executed_at => nil)
   scope :stucked, where('created_at < ? AND state = ?', 1.hour.ago, 'pending')
 
   if configatron.uploaded_file.storage == :s3
@@ -97,7 +97,7 @@ class EventImportFile < ActiveRecord::Base
       import_result.save!
       record += 1
     end
-    self.update_attribute(:imported_at, Time.zone.now)
+    self.update_attribute(:executed_at, Time.zone.now)
     Sunspot.commit
     rows.close
     sm_complete!
@@ -125,7 +125,7 @@ class EventImportFile < ActiveRecord::Base
   def open_import_file
     tempfile = Tempfile.new('event_import_file')
     if configatron.uploaded_file.storage == :s3
-      uploaded_file_path = open(self.event_import.expiring_url(10)).path
+      uploaded_file_path = event_import.expiring_url(10)
     else
       uploaded_file_path = self.event_import.path
     end
@@ -163,7 +163,7 @@ end
 #  file_hash                 :string(255)
 #  user_id                   :integer
 #  note                      :text
-#  imported_at               :datetime
+#  executed_at               :datetime
 #  state                     :string(255)
 #  event_import_file_name    :string(255)
 #  event_import_content_type :string(255)
@@ -172,5 +172,6 @@ end
 #  created_at                :datetime
 #  updated_at                :datetime
 #  edit_mode                 :string(255)
+#  event_import_fingerprint  :string(255)
 #
 

@@ -1,5 +1,4 @@
 class PatronImportFilesController < ApplicationController
-  before_filter :check_client_ip_address
   load_and_authorize_resource
 
   # GET /patron_import_files
@@ -95,7 +94,7 @@ class PatronImportFilesController < ApplicationController
   def import_request
     begin
       @patron_import_file = PatronImportFile.find(params[:id])
-      Asynchronized_Service.new.delay.perform(:PatronImportFile_import, @patron_import_file.id)
+      AsynchronizedService.new.delay.perform(:PatronImportFile_import, @patron_import_file.id)
       flash[:message] = t('patron_import_file.start_importing')
     rescue Exception => e
       logger.error "Failed to send process to delayed_job: #{e}"

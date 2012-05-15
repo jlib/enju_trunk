@@ -24,5 +24,6 @@ end
 #  created_at   :datetime
 #  updated_at   :datetime
 #  deleted_at   :datetime
+#  open_access  :integer         default(0), not null
 #
 

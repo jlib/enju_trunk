@@ -19,5 +19,6 @@ end
 #  due_date   :datetime        not null
 #  created_at :datetime
 #  updated_at :datetime
+#  deleted_at :datetime
 #
 

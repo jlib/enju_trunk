@@ -1,3 +1,4 @@
+<div class="search_form">
 <%= form_for :manifestations, :url => publisher_manifestations_path(@index_patron[:publisher]), :html => {:method => 'get'} do -%>
   <p>
     <%= t('page.search_term') -%>:
@@ -21,3 +22,4 @@
     <%- end -%>
   </p>
 <%- end -%>
+</div>

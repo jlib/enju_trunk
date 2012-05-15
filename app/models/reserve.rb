@@ -313,7 +313,7 @@ class Reserve < ActiveRecord::Base
         message_template_to_patron = MessageTemplate.localized_template('reservation_expired_for_patron', self.user.locale)
         request = MessageRequest.new(:sender => system_user, :receiver => self.user, :message_template => message_template_to_patron)
         request.save_message_body(:manifestations => Array[self.manifestation], :user => self.user)
-        request.send_later(:sm_send_message!)
+        request.delay.sm_send_message!
         self.update_attribute(:expiration_notice_to_patron, true)
 =begin
         if SystemConfiguration.get("send_message.reservation_expired_for_library")
@@ -350,7 +350,7 @@ class Reserve < ActiveRecord::Base
         message_template_to_patron = MessageTemplate.localized_template('retained_manifestations', self.user.locale)
         request = MessageRequest.new(:sender => system_user, :receiver => self.user, :message_template => message_template_to_patron)
         request.save_message_body(:manifestations => Array[self.manifestation], :user => self.user)
-        request.send_later(:sm_send_message!)
+        request.delay.sm_send_message!
         self.update_attribute(:expiration_notice_to_patron, true)
 =end
       when 'reverted'
@@ -969,5 +969,10 @@ end
 #  state                        :string(255)
 #  expiration_notice_to_patron  :boolean         default(FALSE)
 #  expiration_notice_to_library :boolean         default(FALSE)
+#  position                     :integer
+#  receipt_library_id           :integer
+#  information_type_id          :integer
+#  created_by                   :integer
+#  retained                     :boolean         default(FALSE), not null
 #
 

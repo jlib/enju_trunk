@@ -5,15 +5,17 @@ describe ExtentsController do
   fixtures :all
   disconnect_sunspot
 
+  def valid_attributes
+    FactoryGirl.attributes_for(:extent)
+  end
+
   describe "GET index" do
     before(:each) do
       FactoryGirl.create(:extent)
     end
 
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       it "assigns all extents as @extents" do
         get :index
@@ -22,9 +24,7 @@ describe ExtentsController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       it "assigns all extents as @extents" do
         get :index
@@ -33,9 +33,7 @@ describe ExtentsController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       it "assigns all extents as @extents" do
         get :index
@@ -52,56 +50,48 @@ describe ExtentsController do
   end
 
   describe "GET show" do
+    before(:each) do
+      @extent = FactoryGirl.create(:extent)
+    end
+
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       it "assigns the requested extent as @extent" do
-        extent = FactoryGirl.create(:extent)
-        get :show, :id => extent.id
-        assigns(:extent).should eq(extent)
+        get :show, :id => @extent.id
+        assigns(:extent).should eq(@extent)
       end
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       it "assigns the requested extent as @extent" do
-        extent = FactoryGirl.create(:extent)
-        get :show, :id => extent.id
-        assigns(:extent).should eq(extent)
+        get :show, :id => @extent.id
+        assigns(:extent).should eq(@extent)
       end
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       it "assigns the requested extent as @extent" do
-        extent = FactoryGirl.create(:extent)
-        get :show, :id => extent.id
-        assigns(:extent).should eq(extent)
+        get :show, :id => @extent.id
+        assigns(:extent).should eq(@extent)
       end
     end
 
     describe "When not logged in" do
       it "assigns the requested extent as @extent" do
-        extent = FactoryGirl.create(:extent)
-        get :show, :id => extent.id
-        assigns(:extent).should eq(extent)
+        get :show, :id => @extent.id
+        assigns(:extent).should eq(@extent)
       end
     end
   end
 
   describe "GET new" do
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       it "assigns the requested extent as @extent" do
         get :new
@@ -111,9 +101,7 @@ describe ExtentsController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       it "should not assign the requested extent as @extent" do
         get :new
@@ -123,9 +111,7 @@ describe ExtentsController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       it "should not assign the requested extent as @extent" do
         get :new
@@ -144,46 +130,40 @@ describe ExtentsController do
   end
 
   describe "GET edit" do
+    before(:each) do
+      @extent = FactoryGirl.create(:extent)
+    end
+
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       it "assigns the requested extent as @extent" do
-        extent = FactoryGirl.create(:extent)
-        get :edit, :id => extent.id
-        assigns(:extent).should eq(extent)
+        get :edit, :id => @extent.id
+        assigns(:extent).should eq(@extent)
       end
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       it "assigns the requested extent as @extent" do
-        extent = FactoryGirl.create(:extent)
-        get :edit, :id => extent.id
+        get :edit, :id => @extent.id
         response.should be_forbidden
       end
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       it "assigns the requested extent as @extent" do
-        extent = FactoryGirl.create(:extent)
-        get :edit, :id => extent.id
+        get :edit, :id => @extent.id
         response.should be_forbidden
       end
     end
 
     describe "When not logged in" do
       it "should not assign the requested extent as @extent" do
-        extent = FactoryGirl.create(:extent)
-        get :edit, :id => extent.id
+        get :edit, :id => @extent.id
         response.should redirect_to(new_user_session_url)
       end
     end
@@ -191,14 +171,12 @@ describe ExtentsController do
 
   describe "POST create" do
     before(:each) do
-      @attrs = FactoryGirl.attributes_for(:extent)
+      @attrs = valid_attributes
       @invalid_attrs = {:name => ''}
     end
 
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       describe "with valid params" do
         it "assigns a newly created extent as @extent" do
@@ -226,9 +204,7 @@ describe ExtentsController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       describe "with valid params" do
         it "assigns a newly created extent as @extent" do
@@ -256,9 +232,7 @@ describe ExtentsController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       describe "with valid params" do
         it "assigns a newly created extent as @extent" do
@@ -315,14 +289,12 @@ describe ExtentsController do
   describe "PUT update" do
     before(:each) do
       @extent = FactoryGirl.create(:extent)
-      @attrs = FactoryGirl.attributes_for(:extent)
+      @attrs = valid_attributes
       @invalid_attrs = {:name => ''}
     end
 
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       describe "with valid params" do
         it "updates the requested extent" do
@@ -335,7 +307,7 @@ describe ExtentsController do
         end
 
         it "moves its position when specified" do
-          put :update, :id => @extent.id, :extent => @attrs, :position => 2
+          put :update, :id => @extent.id, :extent => @attrs, :move => 'lower'
           response.should redirect_to(extents_url)
         end
       end
@@ -349,9 +321,7 @@ describe ExtentsController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       describe "with valid params" do
         it "updates the requested extent" do
@@ -374,9 +344,7 @@ describe ExtentsController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       describe "with valid params" do
         it "updates the requested extent" do
@@ -425,9 +393,7 @@ describe ExtentsController do
     end
 
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       it "destroys the requested extent" do
         delete :destroy, :id => @extent.id
@@ -440,9 +406,7 @@ describe ExtentsController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       it "destroys the requested extent" do
         delete :destroy, :id => @extent.id
@@ -455,9 +419,7 @@ describe ExtentsController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       it "destroys the requested extent" do
         delete :destroy, :id => @extent.id

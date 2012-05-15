@@ -42,47 +42,18 @@ class PictureFilesController < ApplicationController
       format.html # show.html.erb
       format.json { render :json => @picture_file }
       format.download {
-        if @picture_file.picture.path
-          if configatron.uploaded_file.storage == :s3
-            send_data data, :filename => @picture_file.picture_file_name, :type => @picture_file.picture_content_type, :disposition => 'attachment'
-          else
-            send_file file, :filename => @picture_file.picture_file_name, :type => @picture_file.picture_content_type, :disposition => 'attachment'
-          end
+        case params[:mode]
+        when 'download'
+          disposition = 'attachment'
+        else
+          disposition = 'inline'
         end
-      }
-      format.jpeg {
+
         if @picture_file.picture.path
           if configatron.uploaded_file.storage == :s3
-            send_data data, :filename => @picture_file.picture_file_name, :type => 'image/jpeg', :disposition => 'inline'
+            send_data data, :filename => @picture_file.picture_file_name, :type => @picture_file.picture_content_type, :disposition => disposition
           else
-            send_file file, :filename => @picture_file.picture_file_name, :type => 'image/jpeg', :disposition => 'inline'
-          end
-        end
-      }
-      format.gif {
-        if @picture_file.picture.path
-          if configatron.uploaded_file.storage == :s3
-            send_data data, :filename => @picture_file.picture_file_name, :type => 'image/gif', :disposition => 'inline'
-          else
-            send_file file, :filename => @picture_file.picture_file_name, :type => 'image/gif', :disposition => 'inline'
-          end
-        end
-      }
-      format.png {
-        if @picture_file.picture.path
-          if configatron.uploaded_file.storage == :s3
-            send_data data, :filename => @picture_file.picture_file_name, :type => 'image/png', :disposition => 'inline'
-          else
-            send_file file, :filename => @picture_file.picture_file_name, :type => 'image/png', :disposition => 'inline'
-          end
-        end
-      }
-      format.svg {
-        if @picture_file.picture.path
-          if configatron.uploaded_file.storage == :s3
-            send_data data, :filename => @picture_file.picture_file_name, :type => 'image/svg+xml', :disposition => 'inline'
-          else
-            send_file file, :filename => @picture_file.picture_file_name, :type => 'image/svg+xml', :disposition => 'inline'
+            send_file file, :filename => @picture_file.picture_file_name, :type => @picture_file.picture_content_type, :disposition => disposition
           end
         end
       }
@@ -131,8 +102,19 @@ class PictureFilesController < ApplicationController
   def update
     # 並べ替え
     if params[:move]
-      move_position(@picture_file, params[:move])
-      return
+      direction = params[:move]
+      if ['higher', 'lower'].include?(direction)
+        @picture_file.send("move_#{direction}")
+        case
+        when @picture_file.picture_attachable.is_a?(Shelf)
+          redirect_to shelf_picture_files_url(@picture_file.picture_attachable)
+        when @picture_file.picture_attachable.is_a?(Manifestation)
+          redirect_to manifestation_picture_files_url(@picture_file.picture_attachable)
+        else
+          redirect_to picture_files_url
+        end
+        return
+      end
     end
 
     respond_to do |format|
@@ -149,35 +131,11 @@ class PictureFilesController < ApplicationController
   # DELETE /picture_files/1
   # DELETE /picture_files/1.json
   def destroy
-    obj = @picture_file.picture_attachable
-    case
-    when @picture_file.picture_attachable.is_a?(Shelf)
-      type = 'Shelf'
-    when @picture_file.picture_attachable.is_a?(Manifestation)
-      type = 'Manifestation'
-    when @picture_file.picture_attachable.is_a?(Patron)
-      type = 'Patron'
-    when @picture_file.picture_attachable.is_a?(Event)
-      type = 'Event'
-    else
-      type = nil
-    end
-
     @picture_file.destroy
 
     respond_to do |format|
-      case type
-      when 'Shelf'
-        format.html { redirect_to shelf_picture_files_url(obj) }
-        format.json { head :no_content }
-      when 'Manifestation'
-        format.html { redirect_to manifestation_picture_files_url(obj) }
-        format.json { head :no_content }
-      when 'Patron'
-        format.html { redirect_to patron_picture_files_url(obj) }
-        format.json { head :no_content }
-      when 'Event'
-        format.html { redirect_to event_picture_files_url(obj) }
+      if @shelf
+        format.html { redirect_to shelf_picture_files_url(@shelf) }
         format.json { head :no_content }
       else
         format.html { redirect_to picture_files_url }

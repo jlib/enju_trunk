@@ -8,9 +8,9 @@ class ApplicationController < ActionController::Base
   rescue_from RSolr::Error::Http, :with => :render_500_solr
   rescue_from ActionView::MissingTemplate, :with => :render_404_invalid_format
 
-  #before_filter :get_library_group, :set_locale, :set_available_languages, :prepare_for_mobile, :set_current_user
-  before_filter :get_library_group, :set_locale, :set_available_languages, :set_current_user
-  #helper_method :mobile_device?
+  before_filter :get_library_group, :set_locale, :set_available_languages, :set_mobile_request, :set_current_user
+  has_mobile_fu
+  before_filter :set_request_format
 
   private
   def render_403
@@ -85,7 +85,7 @@ class ApplicationController < ActionController::Base
       end
     end
     if user_signed_in?
-      locale = params[:locale] || session[:locale] || current_user.locale.to_sym
+      locale = params[:locale] || session[:locale] || current_user.locale.try(:to_sym)
     else
       locale = params[:locale] || session[:locale]
     end
@@ -157,14 +157,6 @@ class ApplicationController < ActionController::Base
     @shelf = Shelf.find(params[:shelf_id], :include => :library) if params[:shelf_id]
   end
 
-  def get_basket
-    @basket = Basket.find(params[:basket_id]) if params[:basket_id]
-  end
-
-  def get_patron_merge_list
-    @patron_merge_list = PatronMergeList.find(params[:patron_merge_list_id]) if params[:patron_merge_list_id]
-  end
-
   def get_user
     @user = User.where(:username => params[:user_id]).first if params[:user_id]
     if @user
@@ -200,11 +192,6 @@ class ApplicationController < ActionController::Base
     @library_group = LibraryGroup.site_config
   end
 
-  def get_question
-    @question = Question.find(params[:question_id]) if params[:question_id]
-    authorize! :show, @question if @question
-  end
-
   def get_event
     @event = Event.find(params[:event_id]) if params[:event_id]
   end
@@ -213,40 +200,69 @@ class ApplicationController < ActionController::Base
     @bookstore = Bookstore.find(params[:bookstore_id]) if params[:bookstore_id]
   end
 
-  def get_subject
-    @subject = Subject.find(params[:subject_id]) if params[:subject_id]
-  end
-
-  def get_classification
-    @classification = Classification.find(params[:classification_id]) if params[:classification_id]
-  end
-
   def get_subscription
     @subscription = Subscription.find(params[:subscription_id]) if params[:subscription_id]
   end
 
-  def get_order_list
-    @order_list = OrderList.find(params[:order_list_id]) if params[:order_list_id]
-  end
-
-  def get_purchase_request
-    @purchase_request = PurchaseRequest.find(params[:purchase_request_id]) if params[:purchase_request_id]
-  end
-
-  def get_checkout_type
-    @checkout_type = CheckoutType.find(params[:checkout_type_id]) if params[:checkout_type_id]
-  end
-
-  def get_inventory_file
-    @inventory_file = InventoryFile.find(params[:inventory_file_id]) if params[:inventory_file_id]
-  end
-
-  def get_subject_heading_type
-    @subject_heading_type = SubjectHeadingType.find(params[:subject_heading_type_id]) if params[:subject_heading_type_id]
-  end
-
   def get_series_statement
     @series_statement = SeriesStatement.find(params[:series_statement_id]) if params[:series_statement_id]
+  end
+
+  if defined?(EnjuResourceMerge)
+    def get_patron_merge_list
+      @patron_merge_list = PatronMergeList.find(params[:patron_merge_list_id]) if params[:patron_merge_list_id]
+    end
+
+    def get_series_statement_merge_list
+      @series_statement_merge_list = SeriesStatementMergeList.find(params[:series_statement_merge_list_id]) if params[:series_statement_merge_list_id]
+    end
+  end
+
+  if defined?(EnjuQuestion)
+    def get_question
+      @question = Question.find(params[:question_id]) if params[:question_id]
+      authorize! :show, @question if @question
+    end
+  end
+
+  if defined?(EnjuPurchaseRequest)
+    def get_order_list
+      @order_list = OrderList.find(params[:order_list_id]) if params[:order_list_id]
+    end
+
+    def get_purchase_request
+      @purchase_request = PurchaseRequest.find(params[:purchase_request_id]) if params[:purchase_request_id]
+    end
+  end
+
+  if defined?(EnjuCirculation)
+    def get_basket
+      @basket = Basket.find(params[:basket_id]) if params[:basket_id]
+    end
+
+    def get_checkout_type
+      @checkout_type = CheckoutType.find(params[:checkout_type_id]) if params[:checkout_type_id]
+    end
+  end
+
+  if defined?(EnjuInventory)
+    def get_inventory_file
+      @inventory_file = InventoryFile.find(params[:inventory_file_id]) if params[:inventory_file_id]
+    end
+  end
+
+  if defined?(EnjuSubject)
+    def get_subject_heading_type
+      @subject_heading_type = SubjectHeadingType.find(params[:subject_heading_type_id]) if params[:subject_heading_type_id]
+    end
+
+    def get_subject
+      @subject = Subject.find(params[:subject_id]) if params[:subject_id]
+    end
+
+    def get_classification
+      @classification = Classification.find(params[:classification_id]) if params[:classification_id]
+    end
   end
 
   def convert_charset
@@ -276,32 +292,10 @@ class ApplicationController < ActionController::Base
     false
   end
 
-  def check_client_ip_address
-    access_denied unless my_networks?
-  end
-
-  def check_admin_network
-    access_denied unless admin_networks?
-  end
-
-  def check_dsbl
-    library_group = LibraryGroup.site_config
-    return true if library_group.network_access_allowed?(request.remote_ip, :network_type => 'lan')
-    begin
-      dsbl_hosts = library_group.dsbl_list.split.compact
-      reversed_address = request.remote_ip.split(/\./).reverse.join(".")
-      dsbl_hosts.each do |dsbl_host|
-        result = Socket.gethostbyname("#{reversed_address}.#{dsbl_host}.").last.unpack("C4").join(".")
-        raise SocketError unless result =~ /^127\.0\.0\./
-        access_denied
-      end
-    rescue SocketError
-      nil
-    end
-  end
-
   def store_page
-    flash[:page] = params[:page].to_i if params[:page]
+    if request.get? and request.format.try(:html?) and !request.xhr?
+      flash[:page] = params[:page] if params[:page].to_i > 0
+    end
   end
 
   def store_location
@@ -333,16 +327,17 @@ class ApplicationController < ActionController::Base
       carrier_type = params[:carrier_type]
       library = params[:library]
       language = params[:language]
-      subject = params[:subject]
-      subject_by_term = Subject.where(:term => params[:subject]).first
-      @subject_by_term = subject_by_term
+      if defined?(EnjuSubject)
+        subject = params[:subject]
+        subject_by_term = Subject.where(:term => params[:subject]).first
+        @subject_by_term = subject_by_term
+      end
 
       search.build do
         with(:publisher_ids).equal_to patron.id if patron
         with(:original_manifestation_ids).equal_to manifestation.id if manifestation
         with(:reservable).equal_to reservable unless reservable.nil?
         unless carrier_type.blank?
-          with(:carrier_type).equal_to carrier_type
           with(:carrier_type).equal_to carrier_type
         end
         unless library.blank?
@@ -390,8 +385,24 @@ class ApplicationController < ActionController::Base
     @current_ability ||= Ability.new(current_user, request.remote_ip)
   end
 
-  def prepare_for_mobile
-    #request.format = :mobile if request.smart_phone?
+  def set_mobile_request
+    if params[:mobile_view]
+      if params[:mobile_view] == 'false'
+        session[:mobile_view] = false
+      else
+        session[:mobile_view] = true
+      end
+    else
+      if is_mobile_device?
+        session[:mobile_view] = true
+      end
+    end
+  end
+
+  def set_request_format
+    if session[:mobile_view]
+      request.format = :mobile if is_mobile_device?
+    end
   end
 
   def move_position(resource, direction)

@@ -5,15 +5,17 @@ describe SearchEnginesController do
   fixtures :all
   disconnect_sunspot
 
+  def valid_attributes
+    FactoryGirl.attributes_for(:search_engine)
+  end
+
   describe "GET index" do
     before(:each) do
       FactoryGirl.create(:search_engine)
     end
 
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       it "assigns all search_engines as @search_engines" do
         get :index
@@ -22,9 +24,7 @@ describe SearchEnginesController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       it "assigns all search_engines as @search_engines" do
         get :index
@@ -33,9 +33,7 @@ describe SearchEnginesController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       it "assigns all search_engines as @search_engines" do
         get :index
@@ -55,9 +53,7 @@ describe SearchEnginesController do
 
   describe "GET show" do
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       it "assigns the requested search_engine as @search_engine" do
         search_engine = FactoryGirl.create(:search_engine)
@@ -67,9 +63,7 @@ describe SearchEnginesController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       it "assigns the requested search_engine as @search_engine" do
         search_engine = FactoryGirl.create(:search_engine)
@@ -79,9 +73,7 @@ describe SearchEnginesController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       it "assigns the requested search_engine as @search_engine" do
         search_engine = FactoryGirl.create(:search_engine)
@@ -101,9 +93,7 @@ describe SearchEnginesController do
 
   describe "GET new" do
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       it "assigns the requested search_engine as @search_engine" do
         get :new
@@ -113,9 +103,7 @@ describe SearchEnginesController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       it "should not assign the requested search_engine as @search_engine" do
         get :new
@@ -125,9 +113,7 @@ describe SearchEnginesController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       it "should not assign the requested search_engine as @search_engine" do
         get :new
@@ -147,9 +133,7 @@ describe SearchEnginesController do
 
   describe "GET edit" do
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       it "assigns the requested search_engine as @search_engine" do
         search_engine = FactoryGirl.create(:search_engine)
@@ -159,9 +143,7 @@ describe SearchEnginesController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       it "assigns the requested search_engine as @search_engine" do
         search_engine = FactoryGirl.create(:search_engine)
@@ -171,9 +153,7 @@ describe SearchEnginesController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       it "assigns the requested search_engine as @search_engine" do
         search_engine = FactoryGirl.create(:search_engine)
@@ -193,14 +173,12 @@ describe SearchEnginesController do
 
   describe "POST create" do
     before(:each) do
-      @attrs = FactoryGirl.attributes_for(:search_engine)
+      @attrs = valid_attributes
       @invalid_attrs = {:name => ''}
     end
 
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       describe "with valid params" do
         it "assigns a newly created search_engine as @search_engine" do
@@ -228,9 +206,7 @@ describe SearchEnginesController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       describe "with valid params" do
         it "assigns a newly created search_engine as @search_engine" do
@@ -258,9 +234,7 @@ describe SearchEnginesController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       describe "with valid params" do
         it "assigns a newly created search_engine as @search_engine" do
@@ -317,14 +291,12 @@ describe SearchEnginesController do
   describe "PUT update" do
     before(:each) do
       @search_engine = FactoryGirl.create(:search_engine)
-      @attrs = FactoryGirl.attributes_for(:search_engine)
+      @attrs = valid_attributes
       @invalid_attrs = {:name => ''}
     end
 
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       describe "with valid params" do
         it "updates the requested search_engine" do
@@ -337,7 +309,7 @@ describe SearchEnginesController do
         end
 
         it "moves its position when specified" do
-          put :update, :id => @search_engine.id, :search_engine => @attrs, :position => 2
+          put :update, :id => @search_engine.id, :search_engine => @attrs, :move => 'lower'
           response.should redirect_to(search_engines_url)
         end
       end
@@ -351,9 +323,7 @@ describe SearchEnginesController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       describe "with valid params" do
         it "updates the requested search_engine" do
@@ -376,9 +346,7 @@ describe SearchEnginesController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       describe "with valid params" do
         it "updates the requested search_engine" do
@@ -427,9 +395,7 @@ describe SearchEnginesController do
     end
 
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       it "destroys the requested search_engine" do
         delete :destroy, :id => @search_engine.id
@@ -442,9 +408,7 @@ describe SearchEnginesController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       it "destroys the requested search_engine" do
         delete :destroy, :id => @search_engine.id
@@ -457,9 +421,7 @@ describe SearchEnginesController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       it "destroys the requested search_engine" do
         delete :destroy, :id => @search_engine.id

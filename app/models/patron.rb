@@ -354,10 +354,6 @@ end
 #  patron_type_id                      :integer         default(1), not null
 #  lock_version                        :integer         default(0), not null
 #  note                                :text
-#  creates_count                       :integer         default(0), not null
-#  realizes_count                      :integer         default(0), not null
-#  produces_count                      :integer         default(0), not null
-#  owns_count                          :integer         default(0), not null
 #  required_role_id                    :integer         default(1), not null
 #  required_score                      :integer         default(0), not null
 #  state                               :string(255)
@@ -367,11 +363,17 @@ end
 #  title                               :string(255)
 #  birth_date                          :string(255)
 #  death_date                          :string(255)
-#  address_1_key                       :binary
-#  address_1_iv                        :binary
-#  address_2_key                       :binary
-#  address_2_iv                        :binary
-#  telephone_number_key                :binary
-#  telephone_number_iv                 :binary
+#  note_update_at                      :datetime
+#  note_update_by                      :string(255)
+#  note_update_library                 :string(255)
+#  extelephone_number_1                :string(255)
+#  extelephone_number_2                :string(255)
+#  telephone_number_1_type_id          :integer
+#  telephone_number_2_type_id          :integer
+#  extelephone_number_1_type_id        :integer
+#  extelephone_number_2_type_id        :integer
+#  fax_number_1_type_id                :integer
+#  fax_number_2_type_id                :integer
+#  patron_identifier                   :string(255)
 #
 

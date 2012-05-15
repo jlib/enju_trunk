@@ -795,5 +795,6 @@ end
 #  oauth_token              :string(255)
 #  oauth_secret             :string(255)
 #  enju_access_key          :string(255)
+#  unable                   :boolean
 #
 

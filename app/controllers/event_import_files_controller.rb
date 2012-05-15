@@ -1,5 +1,4 @@
 class EventImportFilesController < ApplicationController
-  before_filter :check_client_ip_address
   load_and_authorize_resource
 
   # GET /event_import_files
@@ -97,7 +96,7 @@ class EventImportFilesController < ApplicationController
   def import_request
     begin
       @event_import_file = EventImportFile.find(params[:id])
-      Asynchronized_Service.new.delay.perform(:EventImportFile_import, @event_import_file.id)
+      AsynchronizedService.new.delay.perform(:EventImportFile_import, @event_import_file.id)
       flash[:message] = t('event_import_file.start_importing')
     rescue Exception => e
       logger.error "Failed to send process to delayed_job: #{e}"

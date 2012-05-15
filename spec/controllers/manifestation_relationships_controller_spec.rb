@@ -5,15 +5,17 @@ describe ManifestationRelationshipsController do
   fixtures :all
   disconnect_sunspot
 
+  def valid_attributes
+    @attrs = FactoryGirl.attributes_for(:manifestation_relationship)
+  end
+
   describe "GET index" do
     before(:each) do
       FactoryGirl.create(:manifestation_relationship)
     end
 
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       it "assigns all manifestation_relationships as @manifestation_relationships" do
         get :index
@@ -22,9 +24,7 @@ describe ManifestationRelationshipsController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       it "assigns all manifestation_relationships as @manifestation_relationships" do
         get :index
@@ -33,9 +33,7 @@ describe ManifestationRelationshipsController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       it "assigns all manifestation_relationships as @manifestation_relationships" do
         get :index
@@ -53,9 +51,7 @@ describe ManifestationRelationshipsController do
 
   describe "GET show" do
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       it "assigns the requested manifestation_relationship as @manifestation_relationship" do
         manifestation_relationship = FactoryGirl.create(:manifestation_relationship)
@@ -65,9 +61,7 @@ describe ManifestationRelationshipsController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       it "assigns the requested manifestation_relationship as @manifestation_relationship" do
         manifestation_relationship = FactoryGirl.create(:manifestation_relationship)
@@ -77,9 +71,7 @@ describe ManifestationRelationshipsController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       it "assigns the requested manifestation_relationship as @manifestation_relationship" do
         manifestation_relationship = FactoryGirl.create(:manifestation_relationship)
@@ -99,9 +91,7 @@ describe ManifestationRelationshipsController do
 
   describe "GET new" do
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       it "assigns the requested manifestation_relationship as @manifestation_relationship" do
         get :new
@@ -111,9 +101,7 @@ describe ManifestationRelationshipsController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       it "should not assign the requested manifestation_relationship as @manifestation_relationship" do
         get :new
@@ -123,9 +111,7 @@ describe ManifestationRelationshipsController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       it "should not assign the requested manifestation_relationship as @manifestation_relationship" do
         get :new
@@ -145,9 +131,7 @@ describe ManifestationRelationshipsController do
 
   describe "GET edit" do
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       it "assigns the requested manifestation_relationship as @manifestation_relationship" do
         manifestation_relationship = FactoryGirl.create(:manifestation_relationship)
@@ -157,9 +141,7 @@ describe ManifestationRelationshipsController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       it "assigns the requested manifestation_relationship as @manifestation_relationship" do
         manifestation_relationship = FactoryGirl.create(:manifestation_relationship)
@@ -169,9 +151,7 @@ describe ManifestationRelationshipsController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       it "assigns the requested manifestation_relationship as @manifestation_relationship" do
         manifestation_relationship = FactoryGirl.create(:manifestation_relationship)
@@ -191,14 +171,12 @@ describe ManifestationRelationshipsController do
 
   describe "POST create" do
     before(:each) do
-      @attrs = FactoryGirl.attributes_for(:manifestation_relationship)
+      @attrs = valid_attributes
       @invalid_attrs = {:parent_id => ''}
     end
 
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       describe "with valid params" do
         it "assigns a newly created manifestation_relationship as @manifestation_relationship" do
@@ -226,9 +204,7 @@ describe ManifestationRelationshipsController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       describe "with valid params" do
         it "assigns a newly created manifestation_relationship as @manifestation_relationship" do
@@ -256,9 +232,7 @@ describe ManifestationRelationshipsController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       describe "with valid params" do
         it "assigns a newly created manifestation_relationship as @manifestation_relationship" do
@@ -315,14 +289,12 @@ describe ManifestationRelationshipsController do
   describe "PUT update" do
     before(:each) do
       @manifestation_relationship = FactoryGirl.create(:manifestation_relationship)
-      @attrs = FactoryGirl.attributes_for(:manifestation_relationship)
+      @attrs = valid_attributes
       @invalid_attrs = {:parent_id => ''}
     end
 
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       describe "with valid params" do
         it "updates the requested manifestation_relationship" do
@@ -336,7 +308,7 @@ describe ManifestationRelationshipsController do
         end
 
         it "moves its position when specified" do
-          put :update, :id => @manifestation_relationship.id, :manifestation_relationship => @attrs, :position => 2
+          put :update, :id => @manifestation_relationship.id, :manifestation_relationship => @attrs, :move => 'lower'
           response.should redirect_to(manifestation_relationships_url)
         end
       end
@@ -350,9 +322,7 @@ describe ManifestationRelationshipsController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       describe "with valid params" do
         it "updates the requested manifestation_relationship" do
@@ -375,9 +345,7 @@ describe ManifestationRelationshipsController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       describe "with valid params" do
         it "updates the requested manifestation_relationship" do
@@ -426,9 +394,7 @@ describe ManifestationRelationshipsController do
     end
 
     describe "When logged in as Administrator" do
-      before(:each) do
-        sign_in FactoryGirl.create(:admin)
-      end
+      login_admin
 
       it "destroys the requested manifestation_relationship" do
         delete :destroy, :id => @manifestation_relationship.id
@@ -441,9 +407,7 @@ describe ManifestationRelationshipsController do
     end
 
     describe "When logged in as Librarian" do
-      before(:each) do
-        sign_in FactoryGirl.create(:librarian)
-      end
+      login_librarian
 
       it "destroys the requested manifestation_relationship" do
         delete :destroy, :id => @manifestation_relationship.id
@@ -456,9 +420,7 @@ describe ManifestationRelationshipsController do
     end
 
     describe "When logged in as User" do
-      before(:each) do
-        sign_in FactoryGirl.create(:user)
-      end
+      login_user
 
       it "destroys the requested manifestation_relationship" do
         delete :destroy, :id => @manifestation_relationship.id

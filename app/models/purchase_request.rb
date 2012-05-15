@@ -204,5 +204,6 @@ end
 #  deleted_at          :datetime
 #  state               :string(255)
 #  pub_date            :string(255)
+#  manifestation_id    :integer
 #
 

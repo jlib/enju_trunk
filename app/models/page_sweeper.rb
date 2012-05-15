@@ -1,9 +1,8 @@
 class PageSweeper < ActionController::Caching::Sweeper
   include ExpireEditableFragment
-  observe Create, Realize, Produce, Own, Patron, Language, Checkin,
-    SeriesStatement, SubjectHeadingType, PictureFile, Shelf, Tag, Answer,
-    Subject, Classification, Library, SubjectHeadingTypeHasSubject,
-    WorkHasSubject, SeriesHasManifestation, InterLibraryLoan
+  observe Create, Realize, Produce, Own, Patron, Language,
+    SeriesStatement, PictureFile, Shelf, Library,
+    SeriesHasManifestation, InterLibraryLoan
 
   def after_save(record)
     case
@@ -15,23 +14,6 @@ class PageSweeper < ActionController::Caching::Sweeper
       #record.items.each do |item|
       #  expire_editable_fragment(item, ['holding'])
       #end
-    when record.is_a?(Tag)
-      record.taggings.collect(&:taggable).each do |taggable|
-        expire_editable_fragment(taggable)
-      end
-    when record.is_a?(Subject)
-      expire_editable_fragment(record)
-      record.works.each do |work|
-        expire_editable_fragment(work)
-      end
-      record.classifications.each do |classification|
-        expire_editable_fragment(classification)
-      end
-    when record.is_a?(Classification)
-      expire_editable_fragment(record)
-      record.subjects.each do |subject|
-        expire_editable_fragment(subject)
-      end
     when record.is_a?(Create)
       expire_editable_fragment(record.patron)
       expire_editable_fragment(record.work)
@@ -51,8 +33,6 @@ class PageSweeper < ActionController::Caching::Sweeper
       record.manifestations.each do |manifestation|
         expire_editable_fragment(manifestation, ['detail'])
       end
-    when record.is_a?(SubjectHeadingTypeHasSubject)
-      expire_editable_fragment(record.subject)
     when record.is_a?(PictureFile)
       if record.picture_attachable_type?
         case
@@ -62,13 +42,6 @@ class PageSweeper < ActionController::Caching::Sweeper
           expire_editable_fragment(record.picture_attachable, ['picture_file'])
         end
       end
-    when record.is_a?(Answer)
-      record.items.each do |item|
-        expire_editable_fragment(item.manifestation, ['detail'])
-      end
-    when record.is_a?(WorkHasSubject)
-      expire_editable_fragment(record.work)
-      expire_editable_fragment(record.subject)
     when record.is_a?(SeriesHasManifestation)
       expire_editable_fragment(record.manifestation)
     when record.is_a?(InterLibraryLoan)

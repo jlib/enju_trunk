@@ -155,5 +155,10 @@ end
 #  state                        :string(255)
 #  expiration_notice_to_patron  :boolean         default(FALSE)
 #  expiration_notice_to_library :boolean         default(FALSE)
+#  position                     :integer
+#  receipt_library_id           :integer
+#  information_type_id          :integer
+#  created_by                   :integer
+#  retained                     :boolean         default(FALSE), not null
 #
 

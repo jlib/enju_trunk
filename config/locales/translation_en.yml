@@ -188,7 +188,7 @@ en:
         patron_import_file_size: Size
         file_hash: File hash
         note: Note
-        imported_at: Imported at
+        executed_at: Executed at
         patron_import_updated_at: Updated at
         state: State
         edit_mode: Edit mode
@@ -699,7 +699,7 @@ en:
         resource_import_file_size: Size
         file_hash: File hash
         note: Note
-        imported_at: Imported at
+        executed_at: Executed at
         resource_import_updated_at: Updated at
         state: State
         edit_mode: Edit mode
@@ -736,7 +736,7 @@ en:
         event_import_file_size: Size
         file_hash: File hash
         note: Note
-        imported_at: Imported at
+        executed_at: Executed at
         event_import_updated_at: Updated at
         state: State
         edit_mode: Edit mode

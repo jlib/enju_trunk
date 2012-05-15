@@ -121,7 +121,7 @@ end
 #  file_hash                    :string(255)
 #  user_id                      :integer
 #  note                         :text
-#  imported_at                  :datetime
+#  executed_at                  :datetime
 #  state                        :string(255)
 #  resource_import_file_name    :string(255)
 #  resource_import_content_type :string(255)
@@ -130,5 +130,6 @@ end
 #  created_at                   :datetime
 #  updated_at                   :datetime
 #  edit_mode                    :string(255)
+#  resource_import_fingerprint  :string(255)
 #
 

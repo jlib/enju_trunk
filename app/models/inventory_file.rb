@@ -47,5 +47,6 @@ end
 #  inventory_content_type :string(255)
 #  inventory_file_size    :integer
 #  inventory_updated_at   :datetime
+#  inventory_fingerprint  :string(255)
 #
 

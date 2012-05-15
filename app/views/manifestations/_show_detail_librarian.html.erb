@@ -4,7 +4,7 @@
       <%- if manifestation.isbn -%>
         <%= google_book_search_preview(manifestation.isbn) -%>
       <%- end -%>
-    <%# cache(:controller => :manifestations, :action => :show, :id => manifestation.id, :page => 'detail', :role => current_user_role_name, :locale => @locale, :manifestation_id => nil) do %>
+    <% cache([:manifestation => manifestation.id, :fragment => 'show_detail_librarian_html', :role => current_user_role_name, :locale => @locale]) do %>
       <table id="resource_detail">
         <%= embed_content(manifestation) -%>
         <%- if manifestation.series_statement -%>
@@ -63,7 +63,7 @@
           </td>
         </tr>
         <tr>
-          <td><%= t('activerecord.attributes.manifestation.price') -%></td>
+          <td><%= t('activerecord.attributes.manifestation.price') -%>:</td>
           <td><%= manifestation.price -%></td>
         </tr>
         <tr>
@@ -208,7 +208,7 @@
         </tr>
         <%- end -%>
       </table>
-    <%# end %>
+    <% end %>
       <%# - if manifestation.items.on_shelf.exists? -%>
       <%- if manifestation.items.exists? -%>
         <%= render 'manifestations/show_holding', :manifestation => manifestation -%>

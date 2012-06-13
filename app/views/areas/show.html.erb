@@ -27,6 +27,6 @@
   <ul>
     <li><%= link_to t('page.back'), areas_path -%></li>
     <li><%= link_to t('page.edit'), edit_area_path(@area) -%></li>
-    <li><%= link_to t('page.destroy'), @area, :confirm => t('page.are_you_sure'), :method => :delete -%></li>
+    <li><%= link_to t('page.destroy'), @area, :data => {:confirm => t('page.are_you_sure')}, :method => :delete -%></li>
   </ul>
 </div>

@@ -93,7 +93,7 @@
         <%= link_to t('page.show'), inter_library_loan -%>
     <%- if can? :destroy, inter_library_loan -%>
         <%= link_to t('page.edit'), edit_inter_library_loan_path(inter_library_loan) -%>
-        <%= link_to t('page.destroy'), inter_library_loan, :confirm => t('page.are_you_sure'), :method => :delete -%>
+        <%= link_to t('page.destroy'), inter_library_loan, :data => {:confirm => t('page.are_you_sure')}, :method => :delete -%>
     <%- end -%>
     </td>
   </tr>

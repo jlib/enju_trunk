@@ -54,7 +54,7 @@
           <%= link_to image_tag('icons/page_white_edit.png', :alt => t('page.edit'), :title => t('tooltip.edit'), :size => '16x16'), edit_question_path(question) -%>
         <% end %>
         <%- if can? :destroy, question -%>
-          <%= link_to image_tag('icons/delete.png', :alt => t('page.destroy'), :title => t('tooltip.destroy'), :size => '16x16'), question_path(question), :confirm => t('page.are_you_sure'), :method => :delete -%>
+          <%= link_to image_tag('icons/delete.png', :alt => t('page.destroy'), :title => t('tooltip.destroy'), :size => '16x16'), question_path(question), :data => {:confirm => t('page.are_you_sure')}, :method => :delete -%>
         <%- end -%>
       </td>
     </tr>

@@ -10,7 +10,7 @@
     <li><%= link_to t('page.show'), @patron -%></li>
    <%- if @patron.user.blank? -%>
       <%- if can? :destroy, @patron -%>
-        <li><%= link_to t('page.destroy'), @patron, :confirm => t('page.are_you_sure'), :method => :delete -%></li>
+        <li><%= link_to t('page.destroy'), @patron, :data => {:confirm => t('page.are_you_sure')}, :method => :delete -%></li>
       <%- end -%>
     <%- end -%>
     <li><%= link_to t('page.back'), patrons_path -%></li>

@@ -24,7 +24,7 @@
       <% end %>
       <%- if can? :destroy, shelf -%>
         <%- unless shelf.id == 1 or shelf.open_access == 9 -%>
-          <%= link_to t('page.destroy'), shelf, :confirm => t('page.are_you_sure'), :method => :delete -%>
+          <%= link_to t('page.destroy'), shelf, :data => {:confirm => t('page.are_you_sure')}, :method => :delete -%>
         <%- end -%>
       <%- end -%>
     </td>

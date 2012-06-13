@@ -101,7 +101,7 @@
         <li><%= link_to t('page.cancel'), user_reserve_path(@reserve.user, @reserve, :mode => 'cancel'), :confirm => t('page.cancel_confirm'), :method => :put -%></li>
       <%- end -%>
     <%- else -%>
-      <li><%= link_to t('page.destroy'), user_reserve_path(@reserve.user, @reserve), :confirm => t('page.are_you_sure'), :method => :delete -%></li>
+      <li><%= link_to t('page.destroy'), user_reserve_path(@reserve.user, @reserve), :data => {:confirm => t('page.are_you_sure')}, :method => :delete -%></li>
     <%- end -%>
     <li><%= link_to t('page.back'), user_reserves_path(@reserve.user) -%></li>
   </ul>
